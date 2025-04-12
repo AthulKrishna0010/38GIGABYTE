@@ -67,7 +67,7 @@ function Header() {
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/pricing">Pricing</a></li>
-          <li><a href="/api">API</a></li>
+          <li><a href="/about">About US</a></li>
           <li><a href="/blog">Blog</a></li>
         </ul>
       </Nav>

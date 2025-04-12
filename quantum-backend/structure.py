@@ -7,13 +7,14 @@ from datetime import datetime
 import tempfile
 import subprocess
 import google.generativeai as genai
+from dotenv import load_dotenv
 
 
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
-
-genai.configure(api_key="AIzaSyDOuYSwbM66WkBjNSe2an4ELpXv_tkiJAw")
+load_dotenv()
+genai.configure(api_key=os.getenv("API_KEY"))
 class PDFExporter:
     @staticmethod
     def export_to_pdf(data, output_dir="exports"):

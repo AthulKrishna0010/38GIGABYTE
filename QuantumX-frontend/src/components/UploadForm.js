@@ -57,14 +57,58 @@ const SubmitButton = styled.button`
   }
 `;
 
+const URLSection = styled.div`
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+`;
+
+const DownloadLink = styled.a`
+  color:rgb(17, 207, 26);
+  font-weight: 500;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const PreviewButton = styled.button`
+  background-color: #4299e1;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #2b6cb0;
+  }
+`;
+
+const ErrorMessage = styled.p`
+  margin-top: 1rem;
+  color: #e53e3e; /* Friendly red color for errors */
+  font-size: 1rem;
+  background-color: #fef2f2; /* Soft red background */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fbd5d5; /* Subtle border */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+`;
+
 const UploadForm = ({ onUploadSuccess }) => {
   const [file, setFile] = useState(null);
+  const [downloadUrl, setDownloadUrl] = useState("");
+  const [error, setError] = useState("");
 
   // Handle file selection
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
+      setError("");
       localStorage.setItem("uploadedFilePath", selectedFile.name); // Save file path to local storage
       console.log("✅ File path saved to local storage:", selectedFile.name);
     }
@@ -75,41 +119,50 @@ const UploadForm = ({ onUploadSuccess }) => {
     e.preventDefault();
 
     if (!file) {
-        alert("No file selected. Please choose a file.");
-        return;
+      alert("No file selected. Please choose a file.");
+      return;
     }
 
-    // Declare and initialize formData
     const formData = new FormData();
     formData.append("image", file); // Attach the selected file
 
     try {
-        const res = await fetch("http://localhost:5000/api/upload", {
-            method: "POST",
-            body: formData,
-        });
+      const res = await fetch("http://localhost:5000/api/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if (data.downloadUrl) {
-            console.log("✅ Upload success. PDF generated:", data.downloadUrl);
-            window.open(data.downloadUrl, "_blank"); // Open PDF in new tab
-        } else {
-            console.error("❌ No PDF generated. Server response:", data);
-        }
+      if (data.downloadUrl) {
+        console.log("✅ Upload success. PDF generated:", data.downloadUrl);
+        setDownloadUrl(data.downloadUrl); // Set the download URL
+        onUploadSuccess(data.downloadUrl); // Pass URL to parent component (ExtractorPage)
+      } else {
+        console.error("❌ No PDF generated. Server response:", data);
+      }
     } catch (err) {
-        console.error("❌ Upload failed:", err);
+      console.error("❌ Upload failed:", err);
     }
-};
-
-
+  };
 
   return (
     <FormWrapper onSubmit={handleSubmit}>
       <CustomButton htmlFor="fileInput">Choose File</CustomButton>
       <HiddenFileInput id="fileInput" type="file" onChange={handleFileChange} />
       {file && <FileName>{file.name}</FileName>}
-      <SubmitButton type="submit">Upload</SubmitButton>
+      {file && <SubmitButton type="submit">Upload</SubmitButton>}
+      {error && <ErrorMessage>{error}</ErrorMessage>} {/* Render error message if it exists */}
+      {downloadUrl && (
+        <URLSection>
+          <DownloadLink href={downloadUrl} target="_blank" rel="noopener noreferrer">
+            Download PDF
+          </DownloadLink>
+          <PreviewButton onClick={() => window.open(downloadUrl, "_blank")}>
+            Preview PDF
+          </PreviewButton>
+        </URLSection>
+      )}
     </FormWrapper>
   );
 };

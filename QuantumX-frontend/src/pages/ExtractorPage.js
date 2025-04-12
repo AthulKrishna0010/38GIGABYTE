@@ -90,12 +90,7 @@ const ExtractorPage = () => {
           </Column>
         </Row>
 
-        {text && (
-          <ResultBox>
-            <ResultTitle>Extracted Text:</ResultTitle>
-            <ResultText>{text}</ResultText>
-          </ResultBox>
-        )}
+        
       </Container>
     </PageWrapper>
     </>
