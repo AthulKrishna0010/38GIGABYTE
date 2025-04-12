@@ -1,84 +1,65 @@
-Great question! Since you're **Noel**, and now that you're using an external **OCR API** instead of training your own Colab model, here's how we can **refactor your and Tushar’s roles** to keep the work efficient, balanced, and productive.
+# Snap2Bill
+
+Welcome to **Snap2Bill**, an innovative platform designed to simplify bill and receipt management through seamless file processing and advanced data extraction. This project combines a **frontend** built with React and a **backend** powered by Node.js and Python, making life easier for users across various domains.
 
 ---
 
-## ✅ REVISED TEAM RESPONSIBILITIES
+## **Repository**
+- **Repository Name**: 38GIGABYTE
+- **Project Name**: Snap2Bill
 
 ---
 
-### 👨‍💻 Noel – *Node.js + React Frontend + API Integration*
-You’re now the **core builder of the app**, responsible for all logic, user interface, and data flow.
-
-#### 🎯 Updated Task List:
-
-#### 📦 Backend (Node.js)
-- [x] Set up Express server
-- [ ] Handle file upload via `multer`
-- [ ] Send uploaded image to the **external OCR API**
-- [ ] Receive structured data or raw text
-- [ ] Save the result to MongoDB
-- [ ] Expose `GET /api/bills` to show past uploads
-
-#### 💻 Frontend (React)
-- [ ] Build the Upload Page (`UploadForm`)
-  - Let user select image
-  - Show loading spinner while waiting
-- [ ] On success, display extracted info in `BillCard`
-- [ ] Build a History Page to show previous uploads from DB
+## **Table of Contents**
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-### 🧠 Tushar – *OCR API Testing + Data Cleaning + Prompt Engineering*
-With the OCR API doing the heavy lifting, Tushar can take on **support and enhancement tasks**:
-
-#### 🔍 Testing the OCR API
-- [ ] Upload multiple bill types to test API performance
-- [ ] Note if it returns:
-  - ✅ Fully structured output
-  - ❌ Raw text (needs formatting)
-
-#### 🧼 Data Cleaning (if API returns unstructured/raw text)
-- [ ] Create **prompt templates** (OpenAI/Gemini) to convert raw text into:
-```json
-{
-  "vendor": "...",
-  "date": "...",
-  "total": "...",
-  "tax": "..."
-}
-```
-
-#### 🧠 Bonus Role
-- [ ] Create fallback Colab model in case OCR API fails
-- [ ] Research additional AI tools that enhance bill processing
+## **Introduction**
+**Snap2Bill** is designed to take the hassle out of organizing bills and receipts. By leveraging cutting-edge technologies like machine learning, image processing, and Generative AI, it effortlessly extracts and processes key details, allowing users to focus on what truly matters.
 
 ---
 
-## ⚙️ Project Flow (Now)
-```mermaid
-graph TD
-A[User uploads bill (React)] --> B[Backend receives file (Node)]
-B --> C[Node sends image to OCR API]
-C --> D[OCR API returns extracted data]
-D --> E[Node saves to MongoDB]
-E --> F[Frontend fetches + shows in UI]
-```
+## **Features**
+1. **Frontend**:
+   - A clean, responsive interface for uploading files and visualizing results.
+   - User-friendly design for smooth navigation and interaction.
+
+2. **Backend**:
+   - Robust API handling using Node.js.
+   - Python-powered processing with image handling and AI integrations.
+
+3. **Core Functionalities**:
+   - File upload and preview capabilities.
+   - AI-driven analytics to extract insights from bills and receipts.
+   - Secure environment for managing sensitive data.
+
+4. **Deployment**:
+   - Ready for deployment on platforms like Heroku, AWS, and Docker.
 
 ---
 
-## 📌 Summary of the Shift
+## **Technology Stack**
+### **Frontend**:
+- React
+- Styled Components
 
-| Responsibility | Before | After |
-|----------------|--------|-------|
-| Bill Text Extraction | Tushar (Colab) | Done by external OCR API |
-| Text to JSON Structuring | Tushar (OpenAI) | Optional fallback |
-| Backend + React UI | Noel | ✅ Still yours |
-| Data Cleanup + Testing | Tushar | ✅ New primary focus |
+### **Backend**:
+- Node.js
+- Python (Flask, Pillow, dotenv)
+
+### **Libraries**:
+- Flask for API handling
+- Pillow for advanced image processing
+- Google Generative AI for smart data extraction
+- dotenv for managing environment variables
 
 ---
 
-Want help writing:
-- Your `uploadRoute.js` with OCR API call?
-- The React `UploadForm` and display logic?
-
-Just say the word and I’ll generate it 🔥
