@@ -105,10 +105,10 @@ const SubscribeButton = styled.button`
 const Pricing = () => {
   // Array of plan objects with title, price, and description
   const plans = [
-    { title: "Per Year", price: "$100/year", description: "Best value for long-term users." },
-    { title: "Per Month", price: "$15/month", description: "Perfect for short-term projects." },
-    { title: "Per Week", price: "$5/week", description: "Flexible plan for quick tasks." },
-    { title: "Student Offer", price: "$50/year", description: "Discounted plan for students." },
+    { title: "Per Year", price: "2000 Rs/year", description: "Best value for long-term users." },
+    { title: "Per Month", price: "200 Rs/month", description: "Perfect for short-term projects." },
+    { title: "Per Week", price: "60 Rs/week", description: "Flexible plan for quick tasks." },
+    { title: "Student Offer", price: "1000 Rs/year", description: "Discounted plan for students." },
   ];
 
   return (
