@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-// Wrapper for the entire section
+// Wrapper for the entire About Us section
 const AboutWrapper = styled.div`
   padding: 2rem 1rem;
   background-color: #f8f9fa;
@@ -11,6 +11,7 @@ const AboutWrapper = styled.div`
   gap: 2rem;
 `;
 
+// A styled container for each section with white background and box shadow
 const Section = styled.div`
   background-color: #ffffff;
   border-radius: 12px;
@@ -20,6 +21,7 @@ const Section = styled.div`
   max-width: 960px;
 `;
 
+// A styled header for each section
 const SectionHeader = styled.h2`
   font-size: 1.75rem;
   font-weight: bold;
@@ -28,6 +30,7 @@ const SectionHeader = styled.h2`
   text-align: center;
 `;
 
+// Paragraph style for section text
 const Paragraph = styled.p`
   font-size: 1rem;
   color: #555;
@@ -35,6 +38,7 @@ const Paragraph = styled.p`
   text-align: center;
 `;
 
+// List style for the Future Goals section
 const GoalsList = styled.ul`
   list-style: disc;
   margin-top: 1rem;
@@ -43,13 +47,15 @@ const GoalsList = styled.ul`
   color: #555;
 `;
 
+// Grid layout for the team members section
 const TeamMembers = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 4x1 or 2x2 layout */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adapts to 4x1 or 2x2 layout */
   gap: 1rem;
   width: 100%;
 `;
 
+// Styled container for each team member
 const TeamMember = styled.div`
   background-color: #f8f9fa;
   border: 1px solid #ddd;
@@ -60,17 +66,20 @@ const TeamMember = styled.div`
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 `;
 
+// Name styling for team members
 const MemberName = styled.h3`
   font-size: 1.25rem;
   color: #007bff;
   margin-bottom: 0.5rem;
 `;
 
+// Role styling for team members
 const MemberRole = styled.p`
   font-size: 1rem;
   color: #666;
 `;
 
+// Main AboutUs component
 const AboutUs = () => {
   return (
     <AboutWrapper>
@@ -97,6 +106,7 @@ const AboutUs = () => {
       <Section>
         <SectionHeader>The Snap2Team</SectionHeader>
         <TeamMembers>
+          {/* Individual team member cards */}
           <TeamMember>
             <MemberName>Athul Krishna</MemberName>
             <MemberRole>React and Node Developer</MemberRole>
