@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+// Styled wrapper for the form layout
 const FormWrapper = styled.form`
   padding: 1rem;
   border: 2px dashed #cbd5e0;
@@ -12,10 +13,12 @@ const FormWrapper = styled.form`
   align-items: center;
 `;
 
+// Hidden input field for file selection
 const HiddenFileInput = styled.input`
   display: none;
 `;
 
+// Styled label acting as a button to trigger file selection
 const CustomButton = styled.label`
   background-color: #4299e1;
   color: white;
@@ -31,6 +34,7 @@ const CustomButton = styled.label`
   }
 `;
 
+// Container to display the name of the selected file
 const FileName = styled.div`
   margin: 0.5rem 0 0.2rem 0;
   font-size: 0.9rem;
@@ -41,6 +45,7 @@ const FileName = styled.div`
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 `;
 
+// Styled upload button, conditionally rendered once a file is selected
 const SubmitButton = styled.button`
   margin-top: 1rem;
   background-color: #3182ce;
@@ -57,6 +62,7 @@ const SubmitButton = styled.button`
   }
 `;
 
+// Section to display the download link and preview button after upload
 const URLSection = styled.div`
   margin-top: 1.5rem;
   display: flex;
@@ -64,15 +70,18 @@ const URLSection = styled.div`
   align-items: center;
 `;
 
+// Styled anchor tag for the download link
 const DownloadLink = styled.a`
-  color:rgb(17, 207, 26);
+  color: rgb(17, 207, 26);
   font-weight: 500;
   text-decoration: none;
+
   &:hover {
     text-decoration: underline;
   }
 `;
 
+// Styled preview button to open the file in a new tab
 const PreviewButton = styled.button`
   background-color: #4299e1;
   color: white;
@@ -87,6 +96,7 @@ const PreviewButton = styled.button`
   }
 `;
 
+// Styled component for error messages
 const ErrorMessage = styled.p`
   margin-top: 1rem;
   color: #e53e3e; /* Friendly red color for errors */
@@ -98,51 +108,57 @@ const ErrorMessage = styled.p`
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 `;
 
+// Main UploadForm component
 const UploadForm = ({ onUploadSuccess }) => {
+  // State to track the selected file
   const [file, setFile] = useState(null);
+
+  // State to store the download URL after successful upload
   const [downloadUrl, setDownloadUrl] = useState("");
+
+  // State to track and display error messages
   const [error, setError] = useState("");
 
-  // Handle file selection
+  // Function to handle file selection
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setFile(selectedFile);
-      setError("");
-      localStorage.setItem("uploadedFilePath", selectedFile.name); // Save file path to local storage
+      setFile(selectedFile); // Save the selected file in state
+      setError(""); // Clear any existing error
+      localStorage.setItem("uploadedFilePath", selectedFile.name); // Optionally save the file name locally
       console.log("✅ File path saved to local storage:", selectedFile.name);
     }
   };
 
-  // Handle form submission
+  // Function to handle file upload
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent page reload on form submit
 
     if (!file) {
-      alert("No file selected. Please choose a file.");
+      alert("No file selected. Please choose a file."); // Alert if no file is selected
       return;
     }
 
     const formData = new FormData();
-    formData.append("image", file); // Attach the selected file
+    formData.append("image", file); // Append the selected file to form data
 
     try {
+      // API request to upload the file
       const res = await fetch("http://localhost:5000/api/upload", {
         method: "POST",
         body: formData,
       });
 
-      const data = await res.json();
+      const data = await res.json(); // Parse the server response
 
       if (data.downloadUrl) {
-        console.log("✅ Upload success. PDF generated:", data.downloadUrl);
-        setDownloadUrl(data.downloadUrl); // Set the download URL
-        onUploadSuccess(data.downloadUrl); // Pass URL to parent component (ExtractorPage)
+        setDownloadUrl(data.downloadUrl); // Store the download URL in state
+        onUploadSuccess(data.downloadUrl); // Notify the parent component
       } else {
-        console.error("❌ No PDF generated. Server response:", data);
+        setError("No text found. Please try again with a valid file."); // Show error if no URL is returned
       }
     } catch (err) {
-      console.error("❌ Upload failed:", err);
+      setError("An error occurred while uploading. Please try again later."); // Catch and display upload errors
     }
   };
 
@@ -150,9 +166,9 @@ const UploadForm = ({ onUploadSuccess }) => {
     <FormWrapper onSubmit={handleSubmit}>
       <CustomButton htmlFor="fileInput">Choose File</CustomButton>
       <HiddenFileInput id="fileInput" type="file" onChange={handleFileChange} />
-      {file && <FileName>{file.name}</FileName>}
-      {file && <SubmitButton type="submit">Upload</SubmitButton>}
-      {error && <ErrorMessage>{error}</ErrorMessage>} {/* Render error message if it exists */}
+      {file && <FileName>{file.name}</FileName>} {/* Display file name if selected */}
+      {file && <SubmitButton type="submit">Upload</SubmitButton>} {/* Show upload button only if file exists */}
+      {error && <ErrorMessage>{error}</ErrorMessage>} {/* Show error message if there's an error */}
       {downloadUrl && (
         <URLSection>
           <DownloadLink href={downloadUrl} target="_blank" rel="noopener noreferrer">
