@@ -1,53 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 
-// Footer Wrapper
+// Wrapper for the entire footer section
 const FooterWrapper = styled.footer`
-  background-color: #333; /* Dark background */
-  color: #fff; /* Light text */
-  padding: 1.5rem 0;
-  text-align: center;
+  background-color: #333; /* Dark background for contrast */
+  color: #fff; /* Light text for readability */
+  padding: 1.5rem 0; /* Spacing around the footer content */
+  text-align: center; /* Center-align the content */
 `;
 
+// Container to organize footer content
 const FooterContainer = styled.div`
-  max-width: 960px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: space-between;
-  align-items: center;
+  max-width: 960px; /* Restricts the width for clean design */
+  margin: 0 auto; /* Centers the container within the page */
+  display: flex; /* Flexbox for layout */
+  flex-wrap: wrap; /* Allows content to wrap on smaller screens */
+  gap: 1rem; /* Space between elements */
+  justify-content: space-between; /* Distributes items across the width */
+  align-items: center; /* Vertically aligns items */
 `;
 
+// Section for footer navigation links
 const FooterLinks = styled.div`
-  display: flex;
-  gap: 1.5rem;
+  display: flex; /* Horizontal arrangement of links */
+  gap: 1.5rem; /* Space between each link */
 
   a {
-    color: #007bff;
-    text-decoration: none;
+    color: #007bff; /* Blue color for links */
+    text-decoration: none; /* Removes underline from links */
 
     &:hover {
-      text-decoration: underline;
+      text-decoration: underline; /* Adds underline on hover */
     }
   }
 `;
 
+// Text for copyright information
 const CopyrightText = styled.p`
-  font-size: 0.85rem;
-  margin: 0;
+  font-size: 0.85rem; /* Smaller text size for copyright info */
+  margin: 0; /* No extra spacing */
 `;
 
+// Footer component definition
 const Footer = () => {
   return (
     <FooterWrapper>
       <FooterContainer>
+        {/* Links for navigation within the site */}
         <FooterLinks>
           <a href="/">Home</a>
           <a href="/pricing">Pricing</a>
           <a href="/about">About Us</a>
           <a href="/blog">Blog</a>
         </FooterLinks>
+
+        {/* Copyright information */}
         <CopyrightText>© 2025 Snap2Bill. All Rights Reserved.</CopyrightText>
       </FooterContainer>
     </FooterWrapper>
